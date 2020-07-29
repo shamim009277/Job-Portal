@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\CandidateTraining;
 use Illuminate\Http\Request;
-use Session;
-use DB;
-use Validator;
+use App\CandidateCartification;
 use Response;
+use Validator;
+use DB;
+use Session;
 
 session_start();
-class CandidateTrainingController extends Controller
+class CandidateCartificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,19 +40,13 @@ class CandidateTrainingController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request->all();
         $validator = Validator::make($request->all(),[
                
-               
-               'training_title.*'=>'required',
-               'country.*'       =>'required',
-               'topic.*'         =>'required',
-               'year.*'          =>'required',
-               'institute.*'     =>'required',
-               'duration.*'      =>'required',
-               'location.*'      =>'required',
-               'start_time.*'    =>'required',
-               'end_time.*'      =>'required'
-
+               'certification.*'  =>'required',
+               'location.*'       =>'required',
+               'institute.*'      =>'required',
+               'duration.*'       =>'required',
             ]);
         if($validator->fails())
         {
@@ -64,38 +58,28 @@ class CandidateTrainingController extends Controller
             Session::flash('flash_message', $plainErrorText);
             return redirect()->back()->withErrors($validator)->withInput()->with('status_color','warning');
         }
-
-
         try {
              $bug = 0;
-             for ($i=0; $i < count($request->training_title); $i++){
+             for ($i=0; $i < count($request->certification); $i++){
            $data[] = [
-               'candidate_id'   =>$request->candidate_id,
-               'training_title' =>$request->training_title[$i],
-               'country'        =>$request->country[$i],
-               'topic'          =>$request->topic[$i],
-               'year'           =>$request->year[$i],
-               'institute'      =>$request->institute[$i],
-               'duration'       =>$request->duration[$i],
-               'location'       =>$request->location[$i],
-               'start_time'     =>$request->start_time[$i],
-               'end_time'       =>$request->end_time[$i]
+               'candidate_id'  =>$request->candidate_id,
+               'certification' =>$request->certification[$i],
+               'location'      =>$request->location[$i],
+               'institute'     =>$request->institute[$i],
+               'duration'      =>$request->duration[$i],
            ];
-           CandidateTraining::insert($data);
+           CandidateCartification::insert($data);
         }
         } catch (\Exception $e) {
             $bug = $e->erroeInfo[1];
         }
-
         if($bug==0){
-            Session::flash('flash_message','Training Summary Added Successfully!!');
+            Session::flash('flash_message','Professional Certification Added Successfully!!');
             return redirect()->back()->with('status_color','success');
             }else{
             Session::flash('flash_message','Something Error Found.');
             return redirect()->back()->with('status_color','danger');
-            } 
-        
-        //dd($data);
+            }
     }
 
     /**
@@ -143,23 +127,16 @@ class CandidateTrainingController extends Controller
         //
     }
 
-    public function editTrain(Request $request){
-
-         $validator = Validator::make($request->all(),[
-                  
-               'training_title.*'=>'required',
-               'country.*'       =>'required',
-               'topic.*'         =>'required',
-               'year.*'          =>'required',
-               'institute.*'     =>'required',
-               'duration.*'      =>'required',
-               'location.*'      =>'required',
-               'start_time.*'    =>'required',
-               'end_time.*'      =>'required'
-
+    public function editCertification(Request $request){
+        
+        $validator = Validator::make($request->all(),[
+               
+               'certification.*'  =>'required',
+               'location.*'       =>'required',
+               'institute.*'      =>'required',
+               'duration.*'       =>'required',
             ]);
-
-         if($validator->fails())
+        if($validator->fails())
         {
             $plainErrorText = "";
             $errorMessage = json_decode($validator->messages(), True);
@@ -174,50 +151,45 @@ class CandidateTrainingController extends Controller
             $bug = 0;
             foreach($request->id as $key => $value){ 
 
-              $training = CandidateTraining::find($request->id[$key]); 
-              //$quarters->candidate_id = $request->candidate_id; 
-              $training->training_title = $request->training_title[$key]; 
-              $training->country        = $request->country[$key]; 
-              $training->topic          = $request->topic[$key]; 
-              $training->year           = $request->year[$key]; 
-              $training->institute      = $request->institute[$key]; 
-              $training->duration       = $request->duration[$key]; 
-              $training->location       = $request->location[$key]; 
-              $training->start_time     = $request->start_time[$key]; 
-              $training->end_time       = $request->end_time[$key]; 
-              //$experience->company_name = $request->company_name[$key]; 
-              $training->save(); 
+              $cartification = CandidateCartification::find($request->id[$key]); 
+              
+              $cartification->certification = $request->certification[$key]; 
+              $cartification->location      = $request->location[$key]; 
+              $cartification->institute     = $request->institute[$key]; 
+              $cartification->duration      = $request->duration[$key]; 
+              $cartification->save(); 
           }
         } catch (\Exception $e) {
-            //$bug = $e->erroeInfo[1];
+            $bug = $e->erroeInfo[1];
         }
-
         if($bug==0){
-            Session::flash('flash_message','Training Summary Updated Successfully!!');
+            Session::flash('flash_message','Professional Certification Added Successfully!!');
             return redirect()->back()->with('status_color','success');
             }else{
             Session::flash('flash_message','Something Error Found.');
             return redirect()->back()->with('status_color','danger');
             }
-
     }
 
+
     public function delete($id){
-        
-        $training = CandidateTraining::find($id);
+
+        $cartification = CandidateCartification::find($id);
         try {
            $bug = 0;
-           $training->delete();
+           $cartification->delete();
        } catch (\Exception $e) {
            $bug = $e->erroeInfo[1];
        }
        if($bug==0){
-            Session::flash('flash_message','Training Summary Deleted Successfully!!');
+            Session::flash('flash_message','Professional Certification Deleted Successfully!!');
             return redirect()->back()->with('status_color','success');
             }else{
             Session::flash('flash_message','Something Error Found.');
             return redirect()->back()->with('status_color','danger');
-            } 
+            }
     }
-}
 
+
+
+}

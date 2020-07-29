@@ -23,6 +23,9 @@
         font-family: -webkit-pictograph;
         color: black;
       }
+      .p{
+        text-align: justify;
+      }
   </style>
 @endpush
 @section('content')
@@ -152,10 +155,10 @@
                 <div class="row">
                     <div class="col-md-10">
                     	<div class="business">
-	                        <p style="color: blue;"><b>{{$company->company_name}}</b></p>
-	                        <p>Address: {{$company->company_address}}</p>
-	                        <p>web: <a href="">{{$company->company_web}}</a></p>
-	                        <p>Business: {{$company->business_description}}</p>
+	                        <p style="color: blue;"><b>{{$employers->company_name}}</b></p>
+	                        <p>Address: {{$employers->company_address}}</p>
+	                        <p>web: <a href="">{{$employers->company_web}}</a></p>
+	                        <p style="text-align: justify;">Business: {{$employers->business_description}}</p>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -180,10 +183,10 @@
 			      </div>
 			      <div class="modal-body">
 			        <div class="business">
-                        <p style="color: blue;"><b>{{$company->company_name}}</b></p>
-                        <p>Address: {{$company->company_address}}</p>
-                        <p>web: <a href="">{{$company->company_web}}</a></p>
-                        <p>Business: {{$company->business_description}}</p>
+                        <p style="color: blue;"><b>{{$employers->company_name}}</b></p>
+                        <p>Address: {{$employers->company_address}}</p>
+                        <p>web: <a href="">{{$employers->company_web}}</a></p>
+                        <p style="text-align: justify;">Business: {{$employers->business_description}}</p>
 
                        <table class="table table-hover">
                         <thead>

@@ -2,30 +2,35 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <h3 class="footer-heading mb-4 text-white">About</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat amet.</p>
-            <p><a href="#" class="btn btn-primary pill text-white px-4">Read More</a></p>
+            <h3 class="footer-heading mb-4 text-white">About Us</h3>
+            <ul class="list-unstyled">
+                    <li><a href="#">About Jobfinder.com</a></li>
+                    <li><a href="#">Terms & Cconditions</a></li>
+                    <li><a href="#">Approach</a></li>
+                    <li><a href="#">Privacy & Policy</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                  </ul>
           </div>
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
+                <h3 class="footer-heading mb-4 text-white">Job Seekers</h3>
                   <ul class="list-unstyled">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Approach</a></li>
-                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Edit Resume</a></li>
+                    <li><a href="#">Career Counseling</a></li>
+                    <li><a href="#">My Bdjobs</a></li>
+                    <li><a href="#">FAQ</a></li>
                     <li><a href="#">News</a></li>
-                    <li><a href="#">Careers</a></li>
                   </ul>
               </div>
               <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">Categories</h3>
+                <h3 class="footer-heading mb-4 text-white">Employers</h3>
                   <ul class="list-unstyled">
-                    <li><a href="#">Full Time</a></li>
-                    <li><a href="#">Freelance</a></li>
-                    <li><a href="#">Temporary</a></li>
-                    <li><a href="#">Internship</a></li>
+                    <li><a href="#">Create Account</a></li>
+                    <li><a href="#">Products/Service</a></li>
+                    <li><a href="#">Post Job</a></li>
+                    <li><a href="#">FAQ</a></li>
                   </ul>
               </div>
             </div>
@@ -33,23 +38,23 @@
 
           
           <div class="col-md-2">
-            <div class="col-md-12"><h3 class="footer-heading mb-4 text-white">Social Icons</h3></div>
-              <div class="col-md-12">
-                <p>
-                  <a href="#" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
-                  <a href="#" class="p-2"><span class="icon-twitter"></span></a>
-                  <a href="#" class="p-2"><span class="icon-instagram"></span></a>
-                  <a href="#" class="p-2"><span class="icon-vimeo"></span></a>
-
-                </p>
-              </div>
+            <div class="col-md-12">
+              <h3 class="footer-heading mb-4 text-white">Social Media</h3>
+               <ul class="list-unstyled">
+                    <li><a href="#"><span class="icon-facebook"> Facebook</a></li>
+                    <li><a href="#"><span class="icon-twitter"></span> Twitter</a></li>
+                    <li><a href="#"><span class="icon-instagram"></span> Instagram</a></li>
+                    <li><a href="#"><span class="icon-google"> Google</a></li>
+                    <li><a href="#"><span class="icon-youtube"> Youtube</a></li>
+                </ul>
+            </div>
           </div>
         </div>
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        
+          
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>

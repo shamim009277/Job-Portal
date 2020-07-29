@@ -29,7 +29,7 @@
 		                  <th>Action</th>
 		                </tr>
 		                </thead>
-
+ 
 		                <tbody> 
 		                	<!-- @foreach($posts as $post)
 		                	{!!$post->job_description!!}

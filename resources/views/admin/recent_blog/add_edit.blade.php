@@ -25,10 +25,13 @@
               </div>
             </div>
             <!-- /.box-header -->
-         
+         @if(!empty($editBlog))
+         {{ Form::open(array('route'=>['blog.update',$editBlog->id],'method'=>'PUT','files'=>true)) }}
+         <?php $but = "Update Blog"; ?>
+         @else
          {{ Form::open(array('route'=>['blog.store'],'method'=>'POST','files'=>true)) }}
          <?php $but = "Add Blog"; ?>
-         
+         @endif
          	@csrf
 
             <div class="box-body">
@@ -38,18 +41,34 @@
                  		<div class="form-group row">
 		                  <label for="blog_title" class="col-sm-3 control-label">Blog Title</label>
 		                  <div class="col-sm-8">
-		                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter Blog Title" >
+		                    <input type="text" class="form-control" id="title" value="{{isset($editBlog->title)?$editBlog->title:old('title')}}" name="title" placeholder="Enter Blog Title" >
 		                  </div>
 		                </div>
 
                     <div class="form-group row">
                       <label for="description" class="col-sm-3 control-label">Description</label>
                       <div class="col-sm-8">
-                        <textarea name="description" class="summernote">    
+                        <textarea name="description" class="summernote">
+                        {!! isset($editBlog->description) ? $editBlog->description : old('description') !!}    
                        </textarea>
                       </div>      
                     </div>
+                    @if(isset($editBlog->photo))
+                    <div class="form-group row">
+                      <label for="Photo" class="col-sm-3 control-label">Old Photo</label>
+                      <div class="col-sm-8">
+                        <img src='{{asset("blog_image/$editBlog->photo")}}'>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="Photo" class="col-sm-3 control-label">New Photo</label>
+                      <div class="col-sm-8">
+                        <input type="file" name="new_photo" onchange="loadFile(event)">
+                        <img id="output" width="20%" style="margin-top:5px;" />
+                      </div>
+                    </div>
 
+                    @else
                     <div class="form-group row">
                       <label for="Photo" class="col-sm-3 control-label">Photo</label>
                       <div class="col-sm-8">
@@ -57,13 +76,7 @@
                         <img id="output" width="20%" style="margin-top:5px;" />
                       </div>
                     </div>
-
-		                <div class="form-group row">
-		                  <label for="status" class="col-sm-3 control-label">Publication Status</label>
-		                  <div class="col-sm-8">
-		                    <input type="checkbox" name="status" value="1">
-		                  </div>
-		                </div> 	
+                    @endif
                   </div>
                
              </div>

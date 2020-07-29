@@ -51,72 +51,47 @@
         <div class="row">
         @foreach($categories as $category) 
            <?php 
-                 $posts = DB::table('job_posts')
+               $current_date = \Carbon\Carbon::now()->toDateString();
+               $posts_count = DB::table('job_posts')
                          ->where('job_category',$category->id)
+                         ->where('application_deadline','>=',$current_date)
                          ->count();
 
             ?>
-          @if(($posts)!= 0)
+          @if(($posts_count)!= 0)
              
           <div class="col-sm-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <a href="#" class="feature-item">
+            <a href="{{URL('/job_post_byCatagory',$category->id)}}" class="feature-item">
               <h2>{{$category->category_name}}</h2>  
-              <h2>({{$posts}})</h2>  
+              <h2>({{$posts_count}})</h2>  
             </a>
           </div>
           @endif 
-        @endforeach
-                     
+        @endforeach                     
         </div>
        
       </div>
     </div><!--End Popular Categories-->
-
     <!--Hot Jobs Option-->
 	<div class="site-section bg-light">
       <div class="container">
-	   <div class="row">
+	      <div class="row">
           <div class="col-md-6 mx-auto text-center mb-5 section-heading">
             <h2 class="mb-5">Hot Jobs</h2>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-3 mb-2" data-aos="fade-up" data-aos-delay="100">
-              <div class="card">
-				  <img src="frontend/images/img_3.jpg" height="110px" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5>Company Name</h5>
-					<p class="card-text">Application Position</p>
-				  </div>
-			  </div>
-          </div> 
-          <div class="col-md-3 mb-2" data-aos="fade-up" data-aos-delay="100">
-              <div class="card">
-				  <img src="frontend/images/img_3.jpg" height="110px" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5>Company Name</h5>
-					<p class="card-text">Application Position</p>
-				  </div>
-			  </div>
+        @foreach($posts as $post)
+          <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+              <div class="card" style="align-items: center;">
+      				  <img src="{{asset('image/' . $post->logo)}}" style="border-radius:50%;width:40%;margin-top: 10px;" class="card-img-top" alt="...">
+      				  <div class="card-body" style="text-align:center;">
+      				     <a href=""><h5 style="color: #28A745;font-weight: bold;font-style: italic;">{{$post->company_name}}</h5></a>
+      					   <a href=""><p class="card-text" style="color:#2028D0;font-weight: 500;height:60px;">{{$post->job_title}}</p></a>
+      				  </div>
+      			  </div>
           </div>
-          <div class="col-md-3 mb-2" data-aos="fade-up" data-aos-delay="100">
-              <div class="card">
-				  <img src="frontend/images/img_3.jpg" height="110px" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5>Company Name</h5>
-					<p class="card-text">Application Position</p>
-				  </div>
-			  </div>
-          </div>
-		  <div class="col-md-3 mb-2" data-aos="fade-up" data-aos-delay="100">
-              <div class="card">
-				  <img src="frontend/images/img_3.jpg" height="110px" class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5>Company Name</h5>
-					<p class="card-text">Application Position</p>
-				  </div>
-			  </div>
-          </div>		  		  
+        @endforeach
         </div>		
       </div>
     </div><!--End Hot Jobs Option-->
@@ -142,7 +117,7 @@
             </div>
             <p class="mb-4 h5 font-italic lineheight1-5">&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nobis magni eaque velit eum, id rem eveniet dolor possimus voluptas..&rdquo;</p>
             <p>&mdash; <strong class="text-black font-weight-bold">John Holmes</strong>, Marketing Strategist</p>
-            <p><a href="https://vimeo.com/28959265" class="popup-vimeo text-uppercase">Watch Video <span class="icon-arrow-right small"></span></a></p>
+            <p><a href="https://www.youtube.com/embed/nhBVL41-_Cw" class="popup-vimeo text-uppercase">Watch Video <span class="icon-arrow-right small"></span></a></p>
           </div>
         </div>
       </div>
@@ -293,7 +268,7 @@
               <span class="mb-3 d-block post-date">January 20, 2018 &bullet; By <a href="#">Admin</a></span>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
             </div>
-          
+                  
             <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="image-play">
@@ -307,5 +282,8 @@
         </div>
       </div>
     </div>
+    @include('sweetalert::alert')
 </section>
 @endsection
+
+

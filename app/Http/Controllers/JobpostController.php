@@ -45,7 +45,7 @@ class JobpostController extends Controller
         $validator = Validator::make($request->all(),[
 
                 
-                 'employers_id',
+                 
                  'job_title'=>'required',
                  'job_location'=>'required',
                  'email'=>'required',

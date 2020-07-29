@@ -24,9 +24,22 @@
               <div class="box" style="padding: 20px 15px;margin: 5px 10px;">
                
                         @foreach($posts as $post)
-                         {{$post->application_deadline}}
-                         {{$post->published_date}}
-                        @if($post->application_deadline > $post->published_date)
+                         <?php 
+                              
+                           /* $dead_line = date('d-m-Y', strtotime($post->application_deadline));
+                            $current_date = new DateTime('now', new DateTimezone('Asia/Dhaka'));
+                            $current_date->format('d-m-Y g:i a');
+
+                            $start_time = \Carbon\Carbon::parse($current_date);
+                            $finish_time = \Carbon\Carbon::parse($dead_line);
+
+                           echo $result = $start_time->diffInDays($finish_time, false); 
+                            */
+
+                          ?>
+                          {{$post->application_deadline}}
+                          {{$post->published_date}} 
+                        
                
                           <div class="row border rounded mb-3" style="background:#E9EBEC;">
                             <div class="col-md-8">
@@ -44,9 +57,9 @@
                             </div>
                             </div>
                           
-                       @endif
+                      
                       @endforeach
-                </div>  
+              </div>  
                   <?php echo $posts->render(); ?>
               </div>
           </div>
@@ -55,3 +68,5 @@
     </div>
 </section>
 @endsection
+
+

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use RealRashid\SweetAlert\Facades\Alert;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,14 @@ Route::post('/experience/editHistory','CandidateEmploymentHistoryController@edit
 Route::get('/experience/delete/{id}','CandidateEmploymentHistoryController@delete');
 Route::resource('/experience','CandidateEmploymentHistoryController');
 
+Route::post('/cartification/edit','CandidateCartificationController@editCertification');
+Route::get('/cartification/delete/{id}','CandidateCartificationController@delete');
+Route::resource('/cartification','CandidateCartificationController');
+
+Route::resource('/upload_resume','CandidateUploadResumeController');
+Route::get('/email_resume','SendMailController@sendview');
+Route::post('/sendEmail/send','SendMailController@store');
+
 
 Route::post('/traing/editTrain','CandidateTrainingController@editTrain');
 Route::get('/traing/delete/{id}','CandidateTrainingController@delete');
@@ -35,7 +44,7 @@ Route::get('/candidate_dashboard/view_resume','FrontendController@view_resume');
 Route::get('/candidate_dashboard','FrontendController@jobWelcome')->name('welcome');
 Route::get('/candidate_logout','FrontendController@candidate_logout')->name('CandidateLogout');
 Route::get('/jobdetails/{id}','FrontendController@jobdetails')->name('jobdetails');
-//Route::get('/job_post','FrontendController@jobPost')->name('jobpost');
+Route::get('/job_post_byCatagory/{id}','FrontendController@jobPostByCatagory')->name('jobpostCatagory');
 
 //-------------------Frontend(Employers)--------------------
 
@@ -57,6 +66,10 @@ Route::group(['middleware'=>['auth']],function(){
     Route::resource('job_post', 'Admin\JobPostController');
     Route::resource('blog', 'Admin\BlogController');
 });
+
+
+
+
 
 
 

@@ -3,15 +3,39 @@
 @push('css')
 <style type="text/css">
    .categories{
-       display: block;
-    background-color: #91a9bd;
-    float: left;
-    padding: 8px;
-    margin-right: 10px;
-    margin-top: 5px;
-    border-radius: 4px;
-    text-align: center;  	  
+	    display: block;
+	    background-color: #91a9bd;
+	    float: left;
+	    padding: 8px;
+	    margin-right: 10px;
+	    margin-top: 5px;
+	    border-radius: 4px;
+	    text-align: center;  	  
    }
+   .text{
+   	 color:#1D9B72;
+   	 /*border: none; */
+   }
+   .bar{
+     	background-color: #000000;
+        border-radius: 5px;
+        margin-top:20px;
+     }
+     .para{
+     	background-color: #E9EBEC;
+     	border-radius: 5px;
+     }
+     .photograph{
+     	border: 1px dotted #dee2e6;
+     	padding: 20px;
+     }
+     .center{
+     	margin: auto;
+     }
+     .item_center{
+     	text-align:center;
+     }
+
 </style>
 @endpush
 @section('content')
@@ -22,19 +46,22 @@
           <!-- <div class="col-md-2 border rounded center">
               <h2>Bangladesh</h2>
           </div> -->
-          <div class="col-md-2 center" style="background-color:white;">
-              <div class="box" style="padding: 20px 15px; ">
-                  <div class="row border rounded" style="background: #F8F9FA;">
-     
-                     <div class="col-md-8" style="font-size: 24px;margin-top: 20px;line-height: 5px;"><h3 style="font-weight: bold;"><a href="">Junior Executive</a></h3></div>
-                     <div class="col-md-8"><h5 style="font-weight: bold;">A Reputed MNC</h5></div>
-                     <div class="col-md-8" style="font-size: 16px;font-family: -webkit-pictograph;line-height: 10px;"><p>Uttara, Dhaka</p><p>Uttara, Dhaka</p></div>
-                     <div class="col-md-8" style="font-size: 16px;font-family: -webkit-pictograph;line-height: 10px;"><p>Bechelor Degree in any discipline</p></div>
-                     <div class="col-md-8" style="font-size: 16px;font-family: -webkit-pictograph;line-height: 10px;"><p>3 to 5(years)</p></div>
-                     <div class="col-md-4" style="font-size: 16px;font-family: -webkit-pictograph;line-height: 10px;"><p>Deadline:<span>April 12, 2020</span></p></div>
-
-                  </div>
-              </div>
+          <div class="col-md-2" style="background-color:white;">
+              <nav class="navbar navbar-inverse bar">
+				  <ul class="nav navbar-nav">
+				    <li><a href="#">Home</a></li>
+				  </ul>  
+				</nav>
+				<div class="">
+					<p>RESUME</p>
+				</div>
+				<nav class="navbar navbar-inverse bar">
+				  <ul class="nav navbar-nav">
+				    <li><a href="#">View Resume</a></li>
+				    <li><a href="#">Edit Resume</a></li>
+				    <li><a href="#">Uoload Resume</a></li>
+				  </ul>  
+				</nav>
 
           </div>
           <div class="col-md-10 center" style="background-color:white;">
@@ -75,7 +102,7 @@
 					    <div id="collapseOne" class="collapse show" data-parent="#accordion">
 					      <div class="card-body">
 					      	@if(!empty($singleInfo))
-					      	 {{Form::open(array('route'=>['edit_resume.update',$singleInfo->id],'method'=>'put','files'=>'true'))}}
+					      	 {{Form::open(array('route'=>['edit_resume.update',$singleInfo->id],'method'=>'put','files'=>true))}}
 					      	 <?php $btn = "Edit Information"; ?>
 					      	@else
 					        {{Form::open(array('route'=>['edit_resume.store'],'method'=>'POST','files'=>'true'))}}
@@ -799,8 +826,7 @@
 				              </div>
 				            </div>
 				            </div>
-				            
-
+			
 				              <div class="row form-group mt-5">
 				                <div class="col-md-12">
 				                  <input type="submit" value="<?php echo $btn; ?>" class="btn btn-primary  py-2 px-5">
@@ -816,39 +842,106 @@
 
 
 
-
-
-
 					  <div class="card">
 					    <div class="card-header">
 					      <a class="collapsed card-link" data-toggle="collapse" href="#educationThree" style="font-weight: bold;">
 					        Professional Certification Summary
 					      </a>
+					      <?php 
+                                $candidate_id = Session::get('id');
+                                $cartifications = DB::table('candidate_cartifications')
+                                                 ->where('candidate_id',$candidate_id)
+                                                 ->get();
+                                $count = DB::table('candidate_cartifications')
+                                                 ->where('candidate_id',$candidate_id)
+                                                 ->count();                 
+                                $n = 0;                 
+					       ?>
 					    </div>
 					    <div id="educationThree" class="collapse" data-parent="#summary">
 					      <div class="card-body">
-				              <div class="row form-group mb-5">
+					      	@if(!empty($cartifications))
+					      	{{Form::open(array('url'=>'/cartification/edit','method'=>'post','files'=>'true'))}}
+					      	  @foreach($cartifications as $cartification)
+					      	  <div class="row form-group">
+                                 <div class="col-md-12">
+                                    <h2 style="float:left;float: left;font-size: 22px;font-weight: bold;font-family: -webkit-pictograph;">Certification : (<?php echo ++$n; ?>) </h2>
+                                    <a class="btn btn-danger btn-sm" style="float:right;" href="{{url('/cartification/delete',$cartification->id)}}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                 </div>
+                              </div>
+                              <div class="row form-group">
 				                <div class="col-md-6 mb-3 mb-md-0">
 				                  <label class="font-weight-bold" for="fullname">Certification</label>
-				                  <input type="text" id="psalary" class="form-control">
+				                  <input type="hidden" name="id[]" value="{{$cartification->id}}">
+				                  <input type="hidden" name="candidate_id" value="<?php echo $candidate_id; ?>">
+				                  <input type="text" id="certification" name="certification[]" class="form-control text" value="{{$cartification->certification}}">
 				                </div>
 				                <div class="col-md-6 mb-3 mb-md-0">
 				                  <label class="font-weight-bold" for="fullname">Location </label>
-				                  <input type="text" id="exsalary" class="form-control">
+				                  <input type="text" id="location" name="location[]" class="form-control text" value="{{$cartification->location}}">
+				                </div>
+				              </div>
+				              <div class="row form-group">
+				                <div class="col-md-6 mb-3 mb-md-0">
+				                  <label class="font-weight-bold" for="fullname">Institute</label>
+				                  <input type="text" id="institute" name="institute[]" class="form-control text" value="{{$cartification->institute}}">
+				                </div>
+				                <div class="col-md-6 mb-3 mb-md-0">
+				                  <label class="font-weight-bold" for="fullname">Duration (Months)</label>
+				                  <input type="text" id="duration" name="duration[]" class="form-control text" value="{{$cartification->duration}}">
+				                </div>
+				              </div>
+					      	  @endforeach
+					      	  <div class="row form-group mt-5">
+				                <div class="col-md-12">
+				                  <input type="submit" value="Edit Certification" class="btn btn-primary  py-2 px-5">
+				                  <h2 id="add_cartification" style="padding: 7px 10px;border: 2px solid #F5BD86;margin: 5px 0px;border-radius: 5px;font-size: 19px;cursor: pointer;font-family: auto;float:right">Add Certification</h2>
+				                </div>
+				              </div>
+				              {!! Form::close() !!}
+					      	@else
+
+					      	{{ Form::open(array('route'=>['cartification.store'],'method'=>'post','files'=>'true')) }}
+                              <div class="pro_cartification" id="pro_cartification">
+                              <div class="cert" id="cert">
+                              	<h2 class="carti" style="text-align:center;font-size: 18px;font-weight: bold;font-family: -webkit-pictograph;"></h2>
+					      	  <div class="row form-group">
+                                 <div class="col-md-12">
+                                    <h2 style="float:left;float: left;font-size: 22px;font-weight: bold;font-family: -webkit-pictograph;">Certification : (1)</h2>
+                                    <h2 id="add_cartification" style="padding: 7px 10px;border: 2px solid #F5BD86;margin: 5px 0px;border-radius: 5px;font-size: 19px;cursor: pointer;font-family: auto;float:right">Add Certification</h2>        
+                                 </div>
+                              </div>
+				              <div class="row form-group">
+				                <div class="col-md-6 mb-3 mb-md-0">
+				                  <label class="font-weight-bold" for="fullname">Certification</label>
+				                  <input type="hidden" name="candidate_id" value="<?php echo $candidate_id; ?>">
+				                  <input type="text" id="certification" name="certification[]" class="form-control" placeholder="eg. Network Certifications(CCNA)">
+				                </div>
+				                <div class="col-md-6 mb-3 mb-md-0">
+				                  <label class="font-weight-bold" for="fullname">Location </label>
+				                  <input type="text" id="location" name="location[]" class="form-control" placeholder="eg. Uttara, Dhaka">
 				                </div>
 				              </div>
 
-				              <div class="row form-group mb-5">
+				              <div class="row form-group">
 				                <div class="col-md-6 mb-3 mb-md-0">
 				                  <label class="font-weight-bold" for="fullname">Institute</label>
-				                  <input type="text" id="psalary" class="form-control">
+				                  <input type="text" id="institute" name="institute[]" class="form-control" placeholder="eg. Cloud Computing System Ltd.">
 				                </div>
 				                <div class="col-md-6 mb-3 mb-md-0">
-				                  <label class="font-weight-bold" for="fullname">Duration </label>
-				                  <input type="text" id="exsalary" class="form-control">
+				                  <label class="font-weight-bold" for="fullname">Duration (Months)</label>
+				                  <input type="text" id="duration" name="duration[]" class="form-control" placeholder="eg. 6">
 				                </div>
 				              </div>     
-
+                              </div>
+                              </div>
+                              <div class="row form-group mt-5">
+				                <div class="col-md-12">
+				                  <input type="submit" value="Add Cartification" class="btn btn-primary  py-2 px-5">
+				                </div>
+				              </div>
+				              {!! Form::close() !!}
+				              @endif
 					      </div>
 					    </div>
 					  </div>
@@ -874,10 +967,10 @@
                   <div class="row" style="background: #F8F9FA; background-color:white;">
                   	<div class="col-md-12">
                       <div id="employment">
-
+       <!-- Employment History-->
 					  <div class="card">
 					    <div class="card-header">
-					      <a class="card-link" data-toggle="collapse" href="#employMent" style="font-weight: bold;">
+					      <a class="card-link" data-toggle="collapse" href="#employMentOne" style="font-weight: bold;">
 					        <i class="fa fa-plus"></i> Employment History
 					      </a>
 					      <?php 
@@ -891,7 +984,7 @@
 					       ?>
 					       
 					    </div>
-					    <div id="employMent" class="collapse show" data-parent="#employment">
+					    <div id="employMentOne" class="collapse show" data-parent="#employment">
 					      <div class="card-body">
                              
 					      	@if(!empty($value))
@@ -904,7 +997,6 @@
                                  <div class="col-md-12">
                                     <h2 style="float:left;float: left;font-size: 22px;font-weight: bold;font-family: -webkit-pictograph;">Experience </h2>
                                     <a class="btn btn-success btn-sm" style="float:right;" href="{{url('/experience/delete',$history->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                        
                                  </div>
                              </div>
                    
@@ -964,7 +1056,7 @@
 				             
 
 				             {{ Form::open(array('route'=>['experience.store'],'method'=>'post','files'=>'true'))}}
-                             	<?php $btn = "Submit"; ?>
+                                <?php $btn = "Submit"; ?>
                              <div class="experience2" id="experience2">
                              <div class="exper" id="exper">
                              	
@@ -1044,7 +1136,42 @@
 					      </div>
 					    </div>
 					  </div>
+        <!--End Employment History-->
+                     <div class="card">
+					    <div class="card-header">
+					      <a class="card-link" data-toggle="collapse" href="#employMentTwo" style="font-weight: bold;">
+					        <i class="fa fa-plus"></i> Photograph
+					      </a> 
+					    </div>
+					    <div id="employMentTwo" class="collapse" data-parent="#employment">
+					      <div class="card-body">
 
+                             <div class="row form-group">
+                                <div class="col-md-10 center" >
+                                   <div class="photograph">
+                                   	  <div class="row">
+                                        <div class="col-md-8 item_center center"> 
+							                <img id="image" style="width:50%;border-radius:50%" />
+							            </div>      
+                                        </div>
+                                      <div class="row">
+                                        <div class="col-md-6 item_center"> 
+							                <input type="file" name="photo" id="photo" onchange="loadFile(event)">
+							            </div>
+							            <div class="col-md-6 item_center"> 
+							                <input type="submit" value="Upload" class="btn btn-primary btn-md py-1 px-5">
+							            </div>
+                                            
+                                        </div>
+                                      </div>	
+                                   </div>
+
+                                </div>
+                             </div>
+					      	
+					      </div>
+					    </div>
+					  </div>
 
           </div>
         </div>
@@ -1055,6 +1182,17 @@
 
 @push('scripts')
   <script type="text/javascript">
+
+    var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('image');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
+
     $(document).ready(function(){
         var max_fields = 10;
         var wrapper = $(".academic");
@@ -1158,6 +1296,7 @@
 	  }
 	}); 
 
+
     $('#edu').change(function(){
     	var secondary ="<option value='SSC'>SSC</option>\
     	                <option value='O Lavel'>O Lavel</option>\
@@ -1172,7 +1311,7 @@
     	              <option value='Diploma in Electrical'>Diploma in Electrical</option>\
     	              <option value='Diploma in Nursing'>Diploma in Nursing</option>\
     	              <option value='Diploma in Electronics'>Diploma in Electronics</option>";
-    var bachelor = "<option value='Bachelor of Arts(BA)'>Bachelor of Arts(BA)</option>\
+       var bachelor = "<option value='Bachelor of Arts(BA)'>Bachelor of Arts(BA)</option>\
     	            <option value='Bachelor of Commerce(BCom)'>Bachelor of Commerce(BCom)</option>\
     	            <option value='Bachelor of Business Administration(BBA)'>Bachelor of Business Administration(BBA)</option>\
     	            <option value='Bachelor of Computer Application(BCA)'>Bachelor of Computer Application(BCA)</option>\
@@ -1190,6 +1329,7 @@
 	}); 
 
     });
+
 
 //Training Institute
 $(document).ready(function(){
@@ -1410,6 +1550,59 @@ $(document).ready(function(){
 	     $(this).parent('div').parent('div').parent('div').remove(); x--;
     });
 });
+
+
+//Professional Cartification
+
+$(document).ready(function(){
+	var max_field = 03;
+    var wrapper5 = $(".pro_cartification");
+    var add_button5 = $("#add_cartification");
+    var x=1;
+
+    $(add_button5).click(function(e){
+        e.preventDefault();
+    	if (x < max_field) {
+        x++;
+        $(wrapper5).append('<div class="training" id="training" style="margin-top: 30px;">\
+           	                     <div class="row form-group">\
+           	                        <div class="col-md-12">\
+           	                          <h2 style="float:left;float: left;font-size: 22px;font-weight: bold;font-family: -webkit-pictograph;">Cartification : ('+ x +')</h2>\
+           	                          <h2 id="remove_cartification" style="padding: 7px 10px;border: 2px solid #F5BD86;margin: 5px 0px;border-radius: 5px;font-size: 19px;cursor: pointer;font-family: auto;float:right">Remove Cartification</h2>\
+           	                        </div>\
+           	                     </div>\
+           	                     <div class="row form-group">\
+					                <div class="col-md-6 mb-3 mb-md-0">\
+					                  <label class="font-weight-bold" for="fullname">Certification</label>\
+					                  <input type="text" id="certification" name="certification[]" class="form-control" placeholder="eg. Network Certifications(CCNA)">\
+					                </div>\
+					                <div class="col-md-6 mb-3 mb-md-0">\
+					                  <label class="font-weight-bold" for="fullname">Location </label>\
+					                  <input type="text" id="location" name="location[]" class="form-control" placeholder="eg. Uttara, Dhaka">\
+					                </div>\
+					              </div>\
+           	                     <div class="row form-group">\
+					                <div class="col-md-6 mb-3 mb-md-0">\
+					                  <label class="font-weight-bold" for="fullname">Institute</label>\
+					                  <input type="text" id="institute" name="institute[]" class="form-control" placeholder="eg. Cloud Computing System Ltd.">\
+					                </div>\
+					                <div class="col-md-6 mb-3 mb-md-0">\
+					                  <label class="font-weight-bold" for="fullname">Duration (Months)</label>\
+					                  <input type="text" id="duration" name="duration[]" class="form-control" placeholder="eg. 6">\
+					                </div>\
+					              </div>\
+           	                     </div>');
+    	}else{
+    		$(".carti").html("<span class='text-danger'>You Can Add Maximum 3 Professional cartification</span>");
+    	}
+    });
+   $(wrapper5).on("click","#remove_cartification", function(e){ //user click on remove text
+	     	//console.log(e);
+	     e.preventDefault(); 
+	     $(this).parent('div').parent('div').parent('div').remove(); x--;
+    });
+});
+
 
   </script>
 @endpush

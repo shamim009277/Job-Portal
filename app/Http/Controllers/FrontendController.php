@@ -4,19 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Candidate;
+use DateTime;
 use App\JobPost;
 use Session;
 use Response;
 use DB;
 use Validator;
 use Hash;
+use Carbon\Carbon;
+
 
 session_start();
 class FrontendController extends Controller
 {
     public function index(){
-    	return view('frontend.home');
+        $current_date = Carbon::now()->toDateString();
+        $posts = DB::table('job_posts')
+                         ->join('employers','job_posts.employers_id','=','employers.id')
+                         ->select('job_posts.*','employers.company_name')
+                         ->where('application_deadline','>=',$current_date)
+                         ->inRandomOrder()
+                         ->limit(2)
+                         ->get(); 
+
+    	return view('frontend.home',compact('posts'));
     }
     public function candidateSignin(){
     	return view('frontend.can_sign');
@@ -25,10 +38,14 @@ class FrontendController extends Controller
     	return view('frontend.candi_create');
     }*/
     public function jobsearch(){
+        $current_date = Carbon::now()->toDateString();
+        //dd($current_date);
         $posts = DB::table('job_posts')
                          ->join('employers','job_posts.employers_id','=','employers.id')
                          ->select('job_posts.*','employers.company_name')
+                         ->where('application_deadline','>=',$current_date)
                          ->paginate(2);
+         //dd($posts);                
         //$posts = JobPost::paginate(2);                 
     	return view('frontend.jobsearch')->with('posts',$posts);
     }
@@ -46,9 +63,9 @@ class FrontendController extends Controller
     /*public function editResume(){
         return view('frontend.edit_resume');
     }*/
-    /*public function jobPost(){
-        return view ('frontend.employers.post_job');
-    }*/
+    public function jobPostByCatagory($id){
+        
+    }
     public function candidateSign(Request $request){
 
         $email = $request->email;

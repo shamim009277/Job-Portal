@@ -18,7 +18,7 @@
                 <div class="box-body">
                    <table id="example1" class="table table-bordered table-striped table-responsive dataTable">
                 <thead>
-                  {{$blogs}}
+                  
                 <tr>
                   <th>Sl</th>
                   <th>Title Name</th>
@@ -44,7 +44,14 @@
                       <span class="label label-danger">Unactive</span>
                       @endif
                     </td>
-                    <td>{{$blog->title}}</td>
+                    <td>
+                      @if($blog->status==1)
+                      <a class="btn btn-danger btn-sm" href=""><i class="fa fa-thumbs-down" aria-hidden="true"></i></a>
+                      @else
+                      <a class="btn btn-info btn-sm" href=""><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                      @endif
+                      <a class="btn btn-success btn-sm" href="{{route('blog.edit',$blog->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    </td>
                   @endforeach                      
                 </tbody>
                
